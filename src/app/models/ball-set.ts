@@ -4,7 +4,7 @@ export class BallSet {
 
   constructor(n) {
     for (var i = 0; i < n; i++) {
-      this.balls.push(new Ball(i, Math.random(), Math.random()))
+      this.balls.push(new Ball(i, Math.random(), Math.random(), 0, 0))
     }
   }
 
@@ -29,7 +29,7 @@ export class BallSet {
       var dy = (Math.random() - 0.5) * 4 * factor;
       var x1 = ((b.x + dx) <= 1 && b.x + dx >= 0) ? (b.x + dx) : (b.x - dx)
       var y1 = ((b.y + dy) <= 1 && b.y + dy >= 0) ? (b.y + dy) : (b.y - dy)
-      bs.balls.push(new Ball(b.id, x1, y1))
+      bs.balls.push(new Ball(b.id, x1, y1, b.x, b.y))
     });
     return bs;
   }

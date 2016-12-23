@@ -13,9 +13,9 @@ declare var d3: any;
 @Component({
   selector: 'app-ballbox-d3',
   template: '<svg></svg>',
-  styleUrls: ['./ballbox-d3.component.css']
+  styleUrls: ['./ballbox-d3-limit-transitions.component.css']
 })
-export class BallboxD3Component implements OnInit {
+export class BallboxD3LimitTransitionsComponent implements OnInit {
   private n: number
   private svg: any;
   private width: number = 500;
@@ -70,20 +70,51 @@ export class BallboxD3Component implements OnInit {
       .attr('r', 2)
     //.style('fill-opacity', 0.5)
 
+    var deltaThres = 2;
+    var c1 = 0, c2 = 0;
+    self.svg.selectAll('circle')
+      .each(function (b) {
+        b.delta = Math.max(Math.abs(b.xFrom - b.x) * self.width, Math.abs(b.yFrom - b.y) * self.height)
+        if (b.delta <= deltaThres) {
+          c1++
+        } else {
+          c2++
+        }
+      });
+    //console.log(c1, c2)
 
     var t = new Date().getTime();
-    console.log(t - self.tLast);
+    //console.log(t - self.tLast);
     self.tLast = t;
-    self.svg.selectAll('circle')
-      .transition()
-      .duration(experimentalEnvironment.refreshIntervalMS)
-      .ease(d3.easeLinear)
-      .attr('cx', function (b, i) {
+
+    /*
+     Applies the new attributes (positions).
+     This is to be called after a transitions or just straight up
+     */
+
+    var fNewAttributes = function (selection) {
+      selection.attr('cx', function (b, i) {
         return self.width * b.x;
       })
-      .attr('cy', function (b) {
-        return self.height * b.y;
-      });
+        .attr('cy', function (b) {
+          return self.height * b.y;
+        })
+    };
 
+    fNewAttributes(
+      self.svg.selectAll('circle')
+        .filter(function (b) {
+          return b.delta > deltaThres;
+        })
+        .transition()
+        .duration(experimentalEnvironment.refreshIntervalMS)
+        .ease(d3.easeLinear)
+    );
+    fNewAttributes(
+      self.svg.selectAll('circle')
+        .filter(function (b) {
+          return b.delta <= deltaThres;
+        })
+    );
   }
 }

@@ -1,31 +1,36 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
-import {Observable} from "rxjs";
-import {BallSet} from "../models/ball-set";
+
+
 import {Store} from "@ngrx/store";
 import {AppState} from "../reducers/AppState";
 import {BallsStoreService} from "../balls-store.service";
 import {ActivatedRoute} from "@angular/router";
 import {SET_POSITION_COUNT} from "../reducers/balls.reducer";
 import {experimentalEnvironment} from "../models/experimental-environment";
+import {Observable} from "rxjs";
+import {BallSet} from "../models/ball-set";
 
 declare var PIXI: any;
 
 @Component({
-  selector: 'app-ballbox-pixi',
+  selector: 'app-ballbox-pixi-tail',
   template: '<div></div>',
-  styleUrls: ['./ballbox-pixi.component.css']
+  styleUrls: ['./ballbox-pixi-tail.component.css']
 })
-export class BallboxPixiComponent implements OnInit {
+export class BallboxPixiTailComponent implements OnInit {
   private svg: any;
   private width: number = 500;
   private height: number = 500;
   private oBallSet: Observable<BallSet>;
   private ballSet: BallSet;
   private el: HTMLElement;
-  private stage: any;
   private renderer: any;
   private graphics = [];
-  private tLast:number;
+  private tLast: number;
+  private stage :any;
+  private renderTexture: any;
+  private renderTexture2: any;
+  private outputSprite: any;
 
   constructor(public elementRef: ElementRef,
               private store: Store<AppState>,
@@ -68,10 +73,15 @@ export class BallboxPixiComponent implements OnInit {
         resolution: 1
       });
       self.renderer.view.style.border = "1px dashed black";
+      self.renderTexture = new PIXI.RenderTexture(self.renderer, self.renderer.width, self.renderer.height);
+      self.renderTexture2 = new PIXI.RenderTexture(self.renderer, self.renderer.width, self.renderer.height);
+      self.outputSprite = new PIXI.Sprite(self.renderTexture);
+
       //self.renderer.backgroundColor = 0x061639;
 
       self.el.appendChild(self.renderer.view);
       self.stage = new PIXI.Container();
+      self.stage.addChild(self.outputSprite);
 
       self.ballSet.balls.forEach(function (b) {
         var g = new PIXI.Graphics();
@@ -83,7 +93,7 @@ export class BallboxPixiComponent implements OnInit {
       })
     }
     var tFrom = new Date().getTime();
-    console.log(tFrom-self.tLast);
+    console.log(tFrom - self.tLast);
     self.tLast = tFrom;
     var n = self.ballSet.size()
     for (var i = 0; i < n; i++) {
@@ -98,7 +108,7 @@ export class BallboxPixiComponent implements OnInit {
     }
     var animate = function () {
       var tRatio = (new Date().getTime() - tFrom) / experimentalEnvironment.refreshIntervalMS;
-      if(tRatio>1){
+      if (tRatio > 1) {
         return;
       }
       for (var i = 0; i < n; i++) {
@@ -106,7 +116,22 @@ export class BallboxPixiComponent implements OnInit {
         g.x = g.xFrom + tRatio * (g.xTo - g.xFrom);
         g.y = g.yFrom + tRatio * (g.yTo - g.yFrom);
       }
+      var temp = self.renderTexture;
+      self.renderTexture = self.renderTexture2;
+      self.renderTexture2 = temp;
+      self.outputSprite.texture = self.renderTexture;
+
+      var bg = new PIXI.Graphics();
+      bg.beginFill(0, 0.1);
+      bg.drawRect(0, 0, self.renderer.width, self.renderer.height);
+      bg.endFill();
+      bg.cacheAsBitmap = true;
+
       self.renderer.render(self.stage);
+      self.renderTexture2.render(self.stage);
+
+      console.log(self.renderTexture2);
+
       requestAnimationFrame(animate);
     };
     animate();
@@ -115,5 +140,4 @@ export class BallboxPixiComponent implements OnInit {
     // Set the fill color
 
   }
-
 }
