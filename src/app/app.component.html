@@ -1,9 +1,10 @@
 <nav>
-  <a routerLink="/d3" routerLinkActive="active">d3.js</a>
-  <a routerLink="/d3-limit-transitions" routerLinkActive="active">d3.js (limit transitions)</a>
-  <a routerLink="/pixi" routerLinkActive="active">pixi</a>
-  <a routerLink="/pixi-tail" routerLinkActive="active">pixi with tail</a>
-  <a routerLink="/pixi-d3" routerLinkActive="active">pixi + d3</a>
-
+  <a routerLink="/" routerLinkActive="active">home</a>
+  <a [routerLink]="['/d3', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">d3.js</a>
+  <a [routerLink]="['/d3-limit-transitions', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">d3.js (limit transitions)</a>
+  <a [routerLink]="['/pixi', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">pixi</a>
+  <a [routerLink]="['/pixi-tail', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">pixi with tail</a>
+  <a [routerLink]="['/pixi-d3', {n:10, refresh:1000, leap:0.25}]" routerLinkActive="active">pixi + d3</a>
+  (hack the url and reload the page - to empty the stores)
 </nav>
 <router-outlet></router-outlet>

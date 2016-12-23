@@ -13,6 +13,7 @@ import { BallboxD3LimitTransitionsComponent } from './ballbox-d3-limit-transitio
 import { BallboxPixiTailComponent } from './ballbox-pixi-tail/ballbox-pixi-tail.component';
 import { BallboxPixiD3Component } from './ballbox-pixi-d3/ballbox-pixi-d3.component';
 import { BallStatsComponent } from './ball-stats/ball-stats.component';
+import { FrontPageComponent } from './front-page/front-page.component';
 
 const appRoutes: Routes = [
   { path: 'd3', component: BallboxD3Component },
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
   { path: 'pixi', component: BallboxPixiComponent },
   { path: 'pixi-tail', component: BallboxPixiTailComponent },
   { path: 'pixi-d3', component: BallboxPixiD3Component },
+  { path: '**', component: FrontPageComponent },
 ];
 
 @NgModule({
@@ -30,7 +32,8 @@ const appRoutes: Routes = [
     BallboxD3LimitTransitionsComponent,
     BallboxPixiTailComponent,
     BallboxPixiD3Component,
-    BallStatsComponent
+    BallStatsComponent,
+    FrontPageComponent
   ],
   imports: [
     BrowserModule,
