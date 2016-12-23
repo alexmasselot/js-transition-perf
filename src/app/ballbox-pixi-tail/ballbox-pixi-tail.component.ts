@@ -10,7 +10,7 @@ import {experimentalEnvironment} from "../models/experimental-environment";
 import {Observable} from "rxjs";
 import {BallSet} from "../models/ball-set";
 
-declare var PIXI: any;
+declare const PIXI: any;
 
 @Component({
   selector: 'app-ballbox-pixi-tail',
@@ -18,7 +18,6 @@ declare var PIXI: any;
   styleUrls: ['./ballbox-pixi-tail.component.css']
 })
 export class BallboxPixiTailComponent implements OnInit {
-  private svg: any;
   private width: number = 500;
   private height: number = 500;
   private oBallSet: Observable<BallSet>;
@@ -40,19 +39,19 @@ export class BallboxPixiTailComponent implements OnInit {
   }
 
   ngOnInit() {
-    var self = this;
+    const self = this;
     this.route.params.subscribe(p => {
-      var n = p['n'] || 100;
+      const n = p['n'] || 100;
       experimentalEnvironment.nbBalls = n;
       experimentalEnvironment.leapLength = p['leap'] || 0.1;
-      experimentalEnvironment.refreshIntervalMS = p['refresh'] || 300;
+      experimentalEnvironment.refreshIntervalMS = p['refresh'] || 1000;
 
       self.store.dispatch({type: SET_POSITION_COUNT, payload: n})
     })
   }
 
   ngAfterViewInit() {
-    var self = this;
+    const self = this;
 
     self.el = self.elementRef.nativeElement;
 
@@ -63,10 +62,9 @@ export class BallboxPixiTailComponent implements OnInit {
   }
 
   render() {
-    var self = this;
+    const self = this;
 
     if (self.renderer === undefined) {
-      console.log('init stage')
       self.renderer = PIXI.autoDetectRenderer(self.width, self.height, {
         antialias: true,
         transparent: true,
@@ -83,20 +81,20 @@ export class BallboxPixiTailComponent implements OnInit {
       self.stage = new PIXI.Container();
       self.stage.addChild(self.outputSprite);
 
-      self.ballSet.balls.forEach(function (b) {
-        var g = new PIXI.Graphics();
+      self.ballSet.balls.forEach(function () {
+        const g = new PIXI.Graphics();
         g.beginFill(0xe74c3c);
-        g.drawCircle(0, 0, 2)
+        g.drawCircle(0, 0, 2);
         self.graphics.push(g);
         g.endFill();
         self.stage.addChild(g);
       })
     }
-    var tFrom = new Date().getTime();
+    const tFrom = new Date().getTime();
     console.log(tFrom - self.tLast);
     self.tLast = tFrom;
-    var n = self.ballSet.size()
-    for (var i = 0; i < n; i++) {
+    const n = self.ballSet.size();
+    for (let i = 0; i < n; i++) {
       let g = self.graphics[i];
       let b = self.ballSet.get(i);
       let xp = b.x * self.width;
@@ -106,17 +104,17 @@ export class BallboxPixiTailComponent implements OnInit {
       g.xTo = xp;
       g.yTo = yp;
     }
-    var animate = function () {
-      var tRatio = (new Date().getTime() - tFrom) / experimentalEnvironment.refreshIntervalMS;
+    const animate = function () {
+      const tRatio = (new Date().getTime() - tFrom) / experimentalEnvironment.refreshIntervalMS;
       if (tRatio > 1) {
         return;
       }
-      for (var i = 0; i < n; i++) {
+      for (let i = 0; i < n; i++) {
         let g = self.graphics[i];
         g.x = g.xFrom + tRatio * (g.xTo - g.xFrom);
         g.y = g.yFrom + tRatio * (g.yTo - g.yFrom);
       }
-      var temp = self.renderTexture;
+      const temp = self.renderTexture;
       self.renderTexture = self.renderTexture2;
       self.renderTexture2 = temp;
       self.outputSprite.texture = self.renderTexture;

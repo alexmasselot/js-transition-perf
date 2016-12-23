@@ -1,9 +1,9 @@
 import {Ball} from "./ball";
 export class BallSet {
-  balls: Array<Ball> = new Array();
+  balls: Array<Ball> = [];
 
   constructor(n) {
-    for (var i = 0; i < n; i++) {
+    for (let i = 0; i < n; i++) {
       this.balls.push(new Ball(i, Math.random(), Math.random(), 0, 0))
     }
   }
@@ -22,14 +22,14 @@ export class BallSet {
    * a ball cannot get out of the box
    */
   walk(factor) {
-    var bs = new BallSet(0);
+    const bs = new BallSet(0);
 
     this.balls.forEach(function (b) {
-      var dx = (Math.random() - 0.5) * 4 * factor;
-      var dy = (Math.random() - 0.5) * 4 * factor;
-      var x1 = ((b.x + dx) <= 1 && b.x + dx >= 0) ? (b.x + dx) : (b.x - dx)
-      var y1 = ((b.y + dy) <= 1 && b.y + dy >= 0) ? (b.y + dy) : (b.y - dy)
-      bs.balls.push(new Ball(b.id, x1, y1, b.x, b.y))
+      let dx = (Math.random() - 0.5) * 4 * factor;
+      let dy = (Math.random() - 0.5) * 4 * factor;
+      let x1 = ((b.x + dx) <= 1 && b.x + dx >= 0) ? (b.x + dx) : (b.x - dx);
+      let y1 = ((b.y + dy) <= 1 && b.y + dy >= 0) ? (b.y + dy) : (b.y - dy);
+      bs.balls.push(new Ball(b.id, x1, y1, b.x, b.y));
     });
     return bs;
   }

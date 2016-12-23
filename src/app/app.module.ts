@@ -19,6 +19,7 @@ const appRoutes: Routes = [
   { path: 'd3-limit-transitions', component: BallboxD3LimitTransitionsComponent },
   { path: 'pixi', component: BallboxPixiComponent },
   { path: 'pixi-tail', component: BallboxPixiTailComponent },
+  { path: 'pixi-d3', component: BallboxPixiD3Component },
 ];
 
 @NgModule({

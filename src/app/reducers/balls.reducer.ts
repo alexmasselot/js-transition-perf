@@ -9,7 +9,7 @@ export const ballsReducer: ActionReducer<BallSet> = (state: BallSet = new BallSe
     case WALK_POSITIONS:
       return state.walk(experimentalEnvironment.leapLength);
     case SET_POSITION_COUNT:
-      return new BallSet(action.payload)
+      return new BallSet(action.payload);
     default:
       return state;
   }

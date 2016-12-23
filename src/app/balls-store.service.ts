@@ -7,12 +7,12 @@ import {experimentalEnvironment} from "./models/experimental-environment";
 @Injectable()
 export class BallsStoreService {
   constructor(private store: Store<AppState>) {
-    var f = function () {
+    const f = function () {
       setTimeout(function () {
         store.dispatch({type: WALK_POSITIONS});
         f();
       }, experimentalEnvironment.refreshIntervalMS)
-    }
+    };
     f();
   }
 
