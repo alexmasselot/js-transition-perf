@@ -33,3 +33,5 @@ testem.log
 .DS_Store
 Thumbs.db
 /js-transition-perf.iml
+/analysis/
+analysis/
