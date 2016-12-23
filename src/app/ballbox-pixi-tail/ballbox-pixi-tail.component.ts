@@ -73,8 +73,8 @@ export class BallboxPixiTailComponent implements OnInit {
         resolution: 1
       });
       self.renderer.view.style.border = "1px dashed black";
-      self.renderTexture = new PIXI.RenderTexture(self.renderer, self.renderer.width, self.renderer.height);
-      self.renderTexture2 = new PIXI.RenderTexture(self.renderer, self.renderer.width, self.renderer.height);
+      self.renderTexture = PIXI.RenderTexture.create(self.renderer.width, self.renderer.height);
+      self.renderTexture2 = PIXI.RenderTexture.create(self.renderer.width, self.renderer.height);
       self.outputSprite = new PIXI.Sprite(self.renderTexture);
 
       //self.renderer.backgroundColor = 0x061639;
@@ -121,16 +121,11 @@ export class BallboxPixiTailComponent implements OnInit {
       self.renderTexture2 = temp;
       self.outputSprite.texture = self.renderTexture;
 
-      var bg = new PIXI.Graphics();
-      bg.beginFill(0, 0.1);
-      bg.drawRect(0, 0, self.renderer.width, self.renderer.height);
-      bg.endFill();
-      bg.cacheAsBitmap = true;
-
       self.renderer.render(self.stage);
-      self.renderTexture2.render(self.stage);
+      self.stage.alpha=0.8;
+      self.renderer.render(self.stage, self.renderTexture2);
+      self.stage.alpha=1;
 
-      console.log(self.renderTexture2);
 
       requestAnimationFrame(animate);
     };
