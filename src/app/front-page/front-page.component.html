@@ -1,0 +1,20 @@
+<h2>Experimenting transition with d3.js & pixi.js</h2>
+
+<h4>The setup</h4>
+<p>A set of particles are launched in a box, and their positions are randomly incremented at regular time intervals.
+  To smoothen the display, we want the particle not to jump, but to follow a continuous trajectory.
+  Both d3.js css transitions and pixi.js mechanisms are explored (with different flavors), varying the number of particles, the time interval length to measure browser performances.
+
+<p>This page sustains the blog post QQQ
+
+<h4>How to use?</h4>
+Head for the menu bar and hack the parameters to change the behavior:
+<ul>
+  <li><i>n=integer</i>: the number of particles</li>
+  <li><i>refresh=integer</i>: the time interval (in milliseconds)</li>
+  <li><i>leap=float in ]0,0.5]</i>: the average distance for the next particle position (relative to the screen width)</li>
+</ul>
+
+
+<h4>The code</h4>
+Backed by Angular2 + ngrx/store. On github
