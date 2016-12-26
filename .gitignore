@@ -37,3 +37,4 @@ Thumbs.db
 /analysis/.Rproj.user/
 /analysis/data/cycle-times/
 /analysis/data/.perf-data.txt.swp
+src/**/*.js
