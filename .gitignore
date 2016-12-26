@@ -33,5 +33,7 @@ testem.log
 .DS_Store
 Thumbs.db
 /js-transition-perf.iml
-/analysis/
-analysis/
+.Rproj.user
+/analysis/.Rproj.user/
+/analysis/data/cycle-times/
+/analysis/data/.perf-data.txt.swp

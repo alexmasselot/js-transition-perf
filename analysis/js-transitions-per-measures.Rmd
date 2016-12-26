@@ -1,0 +1,122 @@
+---
+title: "js-transition-perf-measures"
+author: "Alex Masselot"
+date: "12/23/2016"
+output: pdf_document
+---
+
+```{r, warning=FALSE, message=FALSE}
+library(ggplot2)
+```
+
+You can also embed plots, for example:
+
+```{r}
+dt.cycle.times = read.delim('data/cycle-times.txt')
+dt.perf = read.delim('data/perf-data.txt')
+dt.perf$engine=paste(dt.perf$engine, '.js', sep='')
+dt.perf$is.transparent = dt.perf$opacity <1
+dt.perf = subset(dt.perf, browser == 'chrome')
+```
+```{r}
+.dt = subset(dt.perf, ! is.transparent)
+dt.process.unit = rbind(
+  data.frame(engine=.dt$engine,
+             n=.dt$n,
+             usage=.dt$cpu,
+             process.unit='CPU'
+             ),
+    data.frame(engine=.dt$engine,
+               n=.dt$n,
+               usage=.dt$gpu,
+               process.unit='GPU'
+               )
+)
+```
+
+```{r, echo=FALSE, fig.width=12, fig.height=8}
+q = ggplot(dt.process.unit,
+           aes(x=n, y=100*usage)
+           )  +
+   geom_line(aes(y=100*usage,
+                 colour=engine,
+                 linetype=process.unit
+                 ),
+             lwd=1) +
+  
+   geom_point(aes(y=100*usage,
+                  colour=engine),
+             size=4) +
+  #scale_x_log10() +
+  theme_bw() +
+  theme(
+    plot.title = element_text(size = rel(1.6)),
+    legend.title = element_text(size = rel(1.4)),
+    legend.text = element_text(size = rel(1.4)),
+    axis.title = element_text(size=rel(1.4)),
+    axis.text = element_text(size=rel(1.4))
+    
+    ) +
+  guides(colour = guide_legend(title = "Rendering engine"),
+         linetype = guide_legend(title = "Processing unit")
+         ) +
+  labs(
+    title="CPU & GPU usage\nvs. number of particles & rendering engine",
+    x='Number of particles',
+    y='% of CPU'
+  )
+print(q)
+```
+
+```{r, echo=FALSE, fig.width=12, fig.height=5}
+q = ggplot(subset(dt.perf, ! is.transparent),
+           aes(x=n, y=fps,colour=engine)
+           )  +
+   geom_line(lwd=1) +
+     geom_point(size=4) +
+  theme_bw() +
+  theme(
+    plot.title = element_text(size = rel(1.6)),
+    legend.title = element_text(size = rel(1.4)),
+    legend.text = element_text(size = rel(1.4)),
+    axis.title = element_text(size=rel(1.4)),
+    axis.text = element_text(size=rel(1.4))
+    ) +
+  guides(colour = guide_legend(title = "Rendering engine")
+         ) +
+  labs(
+    title="Rendered frames per second performance\nvs. number of particles & rendering engine",
+    x='Number of particles',
+    y='Frames per second'
+  )
+print(q)
+```
+
+```{r}
+dt.cycle.times$nb.particles = factor(dt.cycle.times$nb.particles)
+q = ggplot(dt.cycle.times, aes(factor(nb.particles), cycle.time)) +
+  geom_hline(yintercept = 1000, linetype='dotted', lwd=1)+ 
+  geom_boxplot(aes(colour=engine)) +
+  ylim(c(800, max(dt.cycle.times$cycle.time))) +
+  theme_bw() +
+  theme(
+    plot.title = element_text(size = rel(1.6)),
+    legend.title = element_text(size = rel(1.4)),
+    legend.text = element_text(size = rel(1.4)),
+    axis.title = element_text(size=rel(1.4)),
+    axis.text = element_text(size=rel(1.4)),
+    axis.text.x = element_text(angle=45, hjust=1)
+    ) +
+  geom_label(x=7,
+             y=950,
+             label="optimal cycle time",
+             hjust=0.8) +
+  guides(colour = guide_legend(title = "Rendering engine")
+         ) +
+  labs(
+    title="Cycle times distribution\nvs rendering engine & number of particles\n(1000ms is perfect cycle)",
+    x='Number of particles',
+    y='Cycle time (ms)'
+  )
+print(q)
+```
