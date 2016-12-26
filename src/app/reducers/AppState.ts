@@ -1,5 +1,5 @@
-import {BallSet} from "../models/ball-set";
+import {ParticleSet} from "../models/particle-set";
 
 export interface AppState {
-  ballSet: BallSet;
+  particleSet: ParticleSet;
 }

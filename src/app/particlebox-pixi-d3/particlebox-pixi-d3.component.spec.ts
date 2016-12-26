@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { BallboxPixiD3Component } from './ballbox-pixi-d3.component';
+import { ParticleboxPixiD3Component } from './particlebox-pixi-d3.component';
 
-describe('BallboxPixiD3Component', () => {
-  let component: BallboxPixiD3Component;
-  let fixture: ComponentFixture<BallboxPixiD3Component>;
+describe('ParticleboxPixiD3Component', () => {
+  let component: ParticleboxPixiD3Component;
+  let fixture: ComponentFixture<ParticleboxPixiD3Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BallboxPixiD3Component ]
+      declarations: [ ParticleboxPixiD3Component ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BallboxPixiD3Component);
+    fixture = TestBed.createComponent(ParticleboxPixiD3Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

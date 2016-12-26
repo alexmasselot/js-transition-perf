@@ -1,5 +1,5 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
-import {BallSet} from "../models/ball-set";
+import {ParticleSet} from "../models/particle-set";
 import {AppState} from "../reducers/AppState";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
@@ -9,20 +9,19 @@ declare const d3: any;
 
 
 @Component({
-  selector: 'app-ball-stats',
-  template: '<svg></svg>',
-  styleUrls: ['./ball-stats.component.css']
+  selector: 'app-particle-stats',
+  template: '<svg></svg>'
 })
-export class BallStatsComponent implements OnInit {
+export class ParticleStatsComponent implements OnInit {
   private svg: any;
   private width: number = 500;
   private height: number = 500;
-  private oBallSet: Observable<BallSet>;
+  private oParticleSet: Observable<ParticleSet>;
   private stats: {};
 
   constructor(public elementRef: ElementRef,
               private store: Store<AppState>) {
-    this.oBallSet = this.store.select<BallSet>('balls');
+    this.oParticleSet = this.store.select<ParticleSet>('particles');
   }
 
   ngOnInit() {
@@ -37,18 +36,18 @@ export class BallStatsComponent implements OnInit {
     this.svg
       .attr('height', this.height)
       .attr('width', this.width);
-    this.oBallSet.subscribe(bs => {
+    this.oParticleSet.subscribe(bs => {
       let n = bs.size();
       let x = 0;
       let y = 0;
-      bs.balls.forEach(function (b) {
+      bs.particles.forEach(function (b) {
         x += b.x;
         y += b.y;
       });
       x = x / n;
       y = y / n;
       let d = 0;
-      bs.balls.forEach(function (b) {
+      bs.particles.forEach(function (b) {
         let dx = b.x - x;
         let dy = b.y - y;
         d += Math.sqrt(dx * dx + dy * dy);

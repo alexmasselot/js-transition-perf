@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { BallboxD3LimitTransitionsComponent } from './ballbox-d3-limit-transitions.component';
+import { ParticleboxD3Component } from './particlebox-d3.component';
 
-describe('BallboxD3LimitTransitionsComponent', () => {
-  let component: BallboxD3LimitTransitionsComponent;
-  let fixture: ComponentFixture<BallboxD3LimitTransitionsComponent>;
+describe('ParticleboxD3Component', () => {
+  let component: ParticleboxD3Component;
+  let fixture: ComponentFixture<ParticleboxD3Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BallboxD3LimitTransitionsComponent ]
+      declarations: [ ParticleboxD3Component ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BallboxD3LimitTransitionsComponent);
+    fixture = TestBed.createComponent(ParticleboxD3Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

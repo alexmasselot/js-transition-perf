@@ -1,42 +1,41 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
-import {BallSet} from "../models/ball-set";
+import {ParticleSet} from "../models/particle-set";
 import {AppState} from "../reducers/AppState";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {BallsStoreService} from "../balls-store.service";
+import {ParticlesStoreService} from "../particles-store.service";
 import {ActivatedRoute} from "@angular/router";
-import {SET_POSITION_COUNT} from "../reducers/balls.reducer";
+import {SET_POSITION_COUNT} from "../reducers/particles.reducer";
 import {experimentalEnvironment} from "../models/experimental-environment";
 
 declare const d3: any;
 
 @Component({
-  selector: 'app-ballbox-d3',
-  template: '<svg></svg>',
-  styleUrls: ['./ballbox-d3-limit-transitions.component.css']
+  selector: 'app-particlebox-d3',
+  template: '<svg></svg>'
 })
-export class BallboxD3LimitTransitionsComponent implements OnInit {
+export class ParticleboxD3LimitTransitionsComponent implements OnInit {
   private n: number;
   private svg: any;
   private width: number = 500;
   private height: number = 500;
-  private oBallSet: Observable<BallSet>;
-  private ballSet: BallSet;
+  private oParticleSet: Observable<ParticleSet>;
+  private particleSet: ParticleSet;
   private tLast;
 
 
   constructor(public elementRef: ElementRef,
               private store: Store<AppState>,
-              private ballStoreService: BallsStoreService,
+              private particleStoreService: ParticlesStoreService,
               private route: ActivatedRoute) {
-    this.oBallSet = this.store.select<BallSet>('balls');
+    this.oParticleSet = this.store.select<ParticleSet>('particles');
   }
 
   ngOnInit() {
     const self = this;
     this.route.params.subscribe(p => {
       const n = p['n'] || 100;
-      experimentalEnvironment.nbBalls = n;
+      experimentalEnvironment.nbParticles = n;
       experimentalEnvironment.leapLength = p['leap'] || 0.1;
       experimentalEnvironment.refreshIntervalMS = p['refresh'] || 1000;
 
@@ -53,8 +52,8 @@ export class BallboxD3LimitTransitionsComponent implements OnInit {
     this.svg
       .attr('height', this.height)
       .attr('width', this.width);
-    this.oBallSet.subscribe(bs => {
-      self.ballSet = bs;
+    this.oParticleSet.subscribe(bs => {
+      self.particleSet = bs;
       self.render()
     })
   }
@@ -62,7 +61,7 @@ export class BallboxD3LimitTransitionsComponent implements OnInit {
   render() {
     const self = this;
     self.svg.selectAll('circle')
-      .data(self.ballSet.balls, function (b) {
+      .data(self.particleSet.particles, function (b) {
         return b.id;
       })
       .enter()
