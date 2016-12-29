@@ -39,14 +39,14 @@ q = ggplot(dt.process.unit,
            aes(x=n, y=100*usage)
            )  +
    geom_line(aes(y=100*usage,
-                 colour=engine,
-                 linetype=process.unit
+                 colour=engine
                  ),
              lwd=1) +
   
    geom_point(aes(y=100*usage,
                   colour=engine),
              size=4) +
+  facet_grid(process.unit ~ .) +
   #scale_x_log10() +
   theme_bw() +
   theme(
@@ -54,8 +54,8 @@ q = ggplot(dt.process.unit,
     legend.title = element_text(size = rel(1.4)),
     legend.text = element_text(size = rel(1.4)),
     axis.title = element_text(size=rel(1.4)),
-    axis.text = element_text(size=rel(1.4))
-    
+    axis.text = element_text(size=rel(1.4)),
+    strip.text = element_text(size=rel(1.4))
     ) +
   guides(colour = guide_legend(title = "Rendering engine"),
          linetype = guide_legend(title = "Processing unit")
