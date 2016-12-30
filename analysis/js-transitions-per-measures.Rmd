@@ -92,7 +92,7 @@ q = ggplot(subset(dt.perf, ! is.transparent),
 print(q)
 ```
 
-```{r}
+```{r, fig.width=12, fig.height=5}
 dt.cycle.times$nb.particles = factor(dt.cycle.times$nb.particles)
 q = ggplot(dt.cycle.times, aes(factor(nb.particles), cycle.time)) +
   geom_hline(yintercept = 1000, linetype='dotted', lwd=1)+ 
