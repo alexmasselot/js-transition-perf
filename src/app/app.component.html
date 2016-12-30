@@ -1,10 +1,35 @@
 <nav>
-  <a routerLink="/" routerLinkActive="active">home</a>
-  <a [routerLink]="['/d3', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">d3.js</a>
-  <a [routerLink]="['/d3-limit-transitions', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">d3.js (limit transitions)</a>
-  <a [routerLink]="['/pixi', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">pixi</a>
-  <a [routerLink]="['/pixi-tail', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">pixi with tail</a>
-  <a [routerLink]="['/pixi-d3', {n:10, refresh:1000, leap:0.25}]" routerLinkActive="active">pixi + d3</a>
-  (hack the url and reload the page - to empty the stores)
+  <div>
+    <h4><a routerLink="/" routerLinkActive="active">home</a></h4>
+    <em>(Don't hesitate to edit the parameters <br/>and reload the page to flush the stores)</em>
+  </div>
+  <div>
+    <h4>3 major technology</h4>
+    <ul>
+      <li><a [routerLink]="['/d3', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">d3.js selection
+        transitions</a></li>
+      <li><a [routerLink]="['/pixi', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">pixi.js
+        html5/WebGL</a></li>
+      <li><a [routerLink]="['/css', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">SVG with CSS
+        transitions (with d3)</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>A few more experiments</h4>
+    <ul>
+      <li><a [routerLink]="['/d3-limit-transitions', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">d3.js
+        when limiting actual transitions</a></li>
+      <li><a [routerLink]="['/css-div', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">&lt;div&gt; with
+        CSS transitions (with d3)</a></li>
+      <li><a [routerLink]="['/pixi-tail', {n:100, refresh:1000, leap:0.25}]" routerLinkActive="active">pixi.js with tail
+        fading out effects</a></li>
+      <li><a [routerLink]="['/pixi-d3', {n:10, refresh:1000, leap:0.25}]" routerLinkActive="active">pixi.js + d3.js
+        combined</a></li>
+    </ul>
+  </div>
 </nav>
-<router-outlet></router-outlet>
+
+<div style="border: solid chocolate 1px">
+  <router-outlet></router-outlet>
+
+</div>

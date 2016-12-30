@@ -14,10 +14,14 @@ import { ParticleboxPixiTailComponent } from './particlebox-pixi-tail/particlebo
 import { ParticleboxPixiD3Component } from './particlebox-pixi-d3/particlebox-pixi-d3.component';
 import { ParticleStatsComponent } from './particle-stats/particle-stats.component';
 import { FrontPageComponent } from './front-page/front-page.component';
+import { ParticleboxD3CssTransitionsComponent } from './particlebox-d3-css-transitions/particlebox-d3-css-transitions.component';
+import { ParticleboxDivD3CssTransitionsComponent } from './particlebox-div-d3-css-transitions/particlebox-div-d3-css-transitions.component';
 
 const appRoutes: Routes = [
   { path: 'd3', component: ParticleboxD3Component },
   { path: 'd3-limit-transitions', component: ParticleboxD3LimitTransitionsComponent },
+  { path: 'css', component: ParticleboxD3CssTransitionsComponent },
+  { path: 'css-div', component: ParticleboxDivD3CssTransitionsComponent},
   { path: 'pixi', component: ParticleboxPixiComponent },
   { path: 'pixi-tail', component: ParticleboxPixiTailComponent },
   { path: 'pixi-d3', component: ParticleboxPixiD3Component },
@@ -33,7 +37,9 @@ const appRoutes: Routes = [
     ParticleboxPixiTailComponent,
     ParticleboxPixiD3Component,
     ParticleStatsComponent,
-    FrontPageComponent
+    FrontPageComponent,
+    ParticleboxD3CssTransitionsComponent,
+    ParticleboxDivD3CssTransitionsComponent
   ],
   imports: [
     BrowserModule,

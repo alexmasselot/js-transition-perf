@@ -1,0 +1,6 @@
+nav{
+  display:flex
+}
+nav div{
+  flex: 25%
+}
