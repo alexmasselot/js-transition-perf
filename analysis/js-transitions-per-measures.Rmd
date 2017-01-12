@@ -14,21 +14,28 @@ You can also embed plots, for example:
 ```{r}
 dt.cycle.times = read.delim('data/cycle-times.txt')
 dt.perf = read.delim('data/perf-data.txt')
-dt.perf$engine=paste(dt.perf$engine, '.js', sep='')
+
+dt.perf$engine=ifelse(dt.perf$engine == 'css',
+                      'css',
+                      paste(dt.perf$engine, '.js', sep='')
+)
+dt.perf = subset(dt.perf, engine %in% c('d3.js', 'pixi.js', 'css'))
+dt.perf$engine = factor(dt.perf$engine, levels=c('d3.js', 'pixi.js', 'css'))
+
 dt.perf$is.transparent = dt.perf$opacity <1
 dt.perf = subset(dt.perf, browser == 'chrome')
+dt.perf = subset(dt.perf, dt.perf$opacity == 1)
 ```
 ```{r}
-.dt = subset(dt.perf, ! is.transparent)
 dt.process.unit = rbind(
-  data.frame(engine=.dt$engine,
-             n=.dt$n,
-             usage=.dt$cpu,
+  data.frame(engine=dt.perf$engine,
+             n=dt.perf$n,
+             usage=dt.perf$cpu,
              process.unit='CPU'
              ),
-    data.frame(engine=.dt$engine,
-               n=.dt$n,
-               usage=.dt$gpu,
+    data.frame(engine=dt.perf$engine,
+               n=dt.perf$n,
+               usage=dt.perf$gpu,
                process.unit='GPU'
                )
 )

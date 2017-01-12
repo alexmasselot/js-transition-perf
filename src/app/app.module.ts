@@ -16,10 +16,12 @@ import { ParticleStatsComponent } from './particle-stats/particle-stats.componen
 import { FrontPageComponent } from './front-page/front-page.component';
 import { ParticleboxD3CssTransitionsComponent } from './particlebox-d3-css-transitions/particlebox-d3-css-transitions.component';
 import { ParticleboxDivD3CssTransitionsComponent } from './particlebox-div-d3-css-transitions/particlebox-div-d3-css-transitions.component';
+import { ParticleboxD3NoTransitionsComponent } from './particlebox-d3-no-transitions/particlebox-d3-no-transitions.component';
 
 const appRoutes: Routes = [
   { path: 'd3', component: ParticleboxD3Component },
   { path: 'd3-limit-transitions', component: ParticleboxD3LimitTransitionsComponent },
+  { path: 'd3-no-transitions', component: ParticleboxD3NoTransitionsComponent },
   { path: 'css', component: ParticleboxD3CssTransitionsComponent },
   { path: 'css-div', component: ParticleboxDivD3CssTransitionsComponent},
   { path: 'pixi', component: ParticleboxPixiComponent },
@@ -39,7 +41,8 @@ const appRoutes: Routes = [
     ParticleStatsComponent,
     FrontPageComponent,
     ParticleboxD3CssTransitionsComponent,
-    ParticleboxDivD3CssTransitionsComponent
+    ParticleboxDivD3CssTransitionsComponent,
+    ParticleboxD3NoTransitionsComponent
   ],
   imports: [
     BrowserModule,
